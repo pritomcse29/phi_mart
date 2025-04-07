@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from decimal import Decimal
-from .models import Product, Category
-
+from .models import Product, Category, Review, ProductImage
 class CategorySerializer(serializers.ModelSerializer):
    class Meta:
         model = Category
@@ -40,12 +39,16 @@ class CategorySerializer(serializers.ModelSerializer):
 
 #     def calculate_tax(self,product):
 #         return round(product.price * Decimal(1.1),2)
-    
+class ProductImageSerializer(serializers.ModelSerializer):
+     class Meta:
+          model = ProductImage
+          fields = ['id','image']   
 class ProductSerializer(serializers.ModelSerializer):
+    images = ProductImageSerializer(many=True, read_only=True)
     class Meta:
         model =  Product
         # "__all__"
-        fields = ['id','name','description','price','stock','category','price_with_tax']
+        fields = ['id','name','description','price','stock','category','price_with_tax','images']
 
     price_with_tax = serializers.SerializerMethodField(method_name='calculate_tax')
     # category = serializers.HyperlinkedRelatedField(
@@ -59,3 +62,14 @@ class ProductSerializer(serializers.ModelSerializer):
          if price < 0:
               raise serializers.ValidationError('Only greater than 0 value is accepted')
          return price
+    
+class ReviewSerializer(serializers.ModelSerializer):
+     class Meta:
+          model =  Review
+          fields =['id','name','description','product']
+     def create(self, validated_data):
+          product_id = self.context['product_id'] 
+          review = Review.objects.create(product_id=product_id, **validated_data)
+          return review
+     
+
