@@ -19,6 +19,8 @@ from rest_framework.permissions import IsAuthenticated,IsAdminUser,AllowAny
 from product.permissions import IsAdminOrReadOnly
 from rest_framework.permissions import DjangoModelPermissions,DjangoModelPermissionsOrAnonReadOnly
 from drf_yasg.utils import swagger_auto_schema
+# from rest_framework.pagination import PageNumberPagination
+from product.paginations import DefaultPagination
 # from api.permissions import IsAdminOrReadOnly, FullDjangoModelPermission
 # # Create your views here.
 class ProductViewSet(ModelViewSet):
@@ -37,6 +39,7 @@ class ProductViewSet(ModelViewSet):
       search_fields = ['name', 'description',]
       odering_fields = ['price','updated_at']
       permission_classes = [IsAdminOrReadOnly]
+      pagination_class = DefaultPagination
      #  permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
      #  permission_classes = [DjangoModelPermissions]
       
@@ -96,7 +99,7 @@ class ProductImageViewSet(ModelViewSet):
      #    return ProductImage.objects.none()
 
     def perform_create(self, serializer):
-        serializer.save(product_id = self.kwargs.get['product_pk'])
+        serializer.save(product_id = self.kwargs.get('product_pk'))
      #    product_pk = self.kwargs.get('product_pk')  
      #    if product_pk:
      #        serializer.save(product_id=product_pk)

@@ -2,6 +2,7 @@ from django.db import models
 from product.models import Product
 from users.models import User
 from uuid import uuid4
+import uuid
 # Create your models here.
 class Cart(models.Model):
     id = models.UUIDField(primary_key=True,default=uuid4 ,editable=False)
@@ -35,7 +36,7 @@ class Order(models.Model):
         (CANCELED,'Canceled'),
         (READY_TO_SHIP,'Ready To Ship')
     ] 
-    id = models.UUIDField(primary_key=True,default=uuid4,editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="orders")
     status = models.CharField(max_length=20, choices=STATUS_CHOICES,default=NOT_PAID)
     total_price = models.DecimalField(max_digits=10,decimal_places=2)

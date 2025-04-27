@@ -40,6 +40,7 @@ class CategorySerializer(serializers.ModelSerializer):
 #     def calculate_tax(self,product):
 #         return round(product.price * Decimal(1.1),2)
 class ProductImageSerializer(serializers.ModelSerializer):
+     image =  serializers.ImageField()
      class Meta:
           model = ProductImage
           fields = ['id','image']   
