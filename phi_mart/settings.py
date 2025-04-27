@@ -80,7 +80,7 @@ TEMPLATES = [
 ]
 
 # WSGI_APPLICATION = 'phi_mart.wsgi.app'
-WSGI_APPLICATION = 'phi_mart.wsgi.application'
+WSGI_APPLICATION = 'phi_mart.wsgi.app'
 
 
 # Database
