@@ -6,6 +6,7 @@ from django.conf import settings
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from .views import api_root_view
 schema_view = get_schema_view(
    openapi.Info(
       title="PhiMart E-commerce API ",
@@ -20,6 +21,7 @@ schema_view = get_schema_view(
 )
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', api_root_view),
     path('api-auth/', include('rest_framework.urls')),
     path('api/v1/',include('api.urls')),
     path('auth/', include('djoser.urls')),
