@@ -65,10 +65,13 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'phi_mart.urls'
 
+
+
 CORS_ALLOWED_ORIGINS = [
 
     'http://localhost:5173',
 ]
+CORS_ALLOW_ALL_ORIGINS = True
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
