@@ -8,5 +8,6 @@ class UserSerializer(BaseUserSerializer):
  
     class Meta(BaseUserSerializer.Meta):
         ref_name = 'CustomUser'
-        fields =['id','email','password','first_name','last_name','address','phone_number']
+        fields =['id','email','password','first_name','last_name','address','phone_number','is_staff']
+        read_only_fields =['is_staff']
 
