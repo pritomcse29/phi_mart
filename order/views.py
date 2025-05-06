@@ -4,7 +4,8 @@ from rest_framework.mixins import CreateModelMixin,RetrieveModelMixin,DestroyMod
 from order.models import Cart,CartItem,Order
 from order.serializers import updateOrderSerializer,CreateOrderSerializer,UpdateCartItemSerializer,AddCartItemSerializer,CartSerializer,CartItemSerializer,OrderSerializer
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
-
+from rest_framework.response import Response
+from rest_framework import status
 class CartViewSet(CreateModelMixin,DestroyModelMixin,RetrieveModelMixin,GenericViewSet):
       
       # queryset = Cart.objects.all()
@@ -22,7 +23,8 @@ class CartViewSet(CreateModelMixin,DestroyModelMixin,RetrieveModelMixin,GenericV
             existing_cart = Cart.objects.filter(user=request.user).first()
             if existing_cart:
                   serializer = self.get_serializer(existing_cart)
-                  return super().create(request, *args, **kwargs)
+                  return Response(serializer.data, status=status.HTTP_200_OK)
+            return super().create(request, *args, **kwargs)
             # return Cart.objects.filter(user=self.request.user)
 # class CartItemViewSet(ModelViewSet):
 #     queryset = CartItem.objects.all()
