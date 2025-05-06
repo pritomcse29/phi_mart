@@ -11,7 +11,7 @@ class CartViewSet(CreateModelMixin,DestroyModelMixin,RetrieveModelMixin,GenericV
       serializer_class = CartSerializer
       permission_classes = [IsAuthenticated]
       def perform_create(self, serializer):
-            serializer.save(user=self.self.request.user)
+            serializer.save(user=self.request.user)
       def get_queryset(self):
             if getattr(self, 'swagger_fake_view', False):  # Avoid issues in schema generation
                   return Cart.objects.none()
