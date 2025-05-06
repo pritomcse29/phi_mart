@@ -18,6 +18,11 @@ class CartViewSet(CreateModelMixin,DestroyModelMixin,RetrieveModelMixin,GenericV
             if self.request.user.is_authenticated:
                return Cart.objects.filter(user=self.request.user)
             return Cart.objects.none()  # Return empty queryset for anonymous users
+      def create(self, request,*args, **kwargs):
+            existing_cart = Cart.objects.filter(user=request.user).first()
+            if existing_cart:
+                  serializer = self.get_serializer(existing_cart)
+                  return super().create(request, *args, **kwargs)
             # return Cart.objects.filter(user=self.request.user)
 # class CartItemViewSet(ModelViewSet):
 #     queryset = CartItem.objects.all()
