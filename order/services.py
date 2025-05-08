@@ -37,8 +37,8 @@ class OrderService:
         if order.user != user:
             raise PermissionDenied("You can only cancel your own order")
         if order.status == Order.DELIVERED:
-            raise ValidationError("you can not cancel an order")
-        order.status = Order.Cancel
+            raise ValidationError({"detail":"you can not cancel an order"})
+        order.status = Order.CANCELED
         order.save()
         return order
     

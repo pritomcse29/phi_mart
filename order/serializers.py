@@ -4,6 +4,8 @@ from product.serializers import ProductSerializer
 from product.models import Product
 from order.models import Order,OrderItem
 from order.services import OrderService
+class EmptySerializer(serializers.Serializer):
+    pass
 class SimpleProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
@@ -146,4 +148,8 @@ class updateOrderSerializer(serializers.ModelSerializer):
         # instance.status = new_status
         # instance.save()
         # return instance
+        if not user.is_staff:
+            raise serializers.ValidationError(
+                {'detail':'You are not allowed to update this order'}
+            )
         return super().update(instance, validated_data)
