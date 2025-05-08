@@ -101,12 +101,13 @@ class CreateOrderSerializer(serializers.Serializer):
     def validate_cart_id(self, cart_id):
         if not Cart.objects.filter(pk=cart_id).exists():
             raise serializers.ValidationError("No cart found with this id")
-        if not CartItem.objects.filter(cart_id = cart_id).exist():
+        if not CartItem.objects.filter(cart_id = cart_id).exists():
             raise serializers.ValidationError("Cart is empty")
         
         return cart_id
     def create(self, validated_data):
-        user_id = self.context
+        # user_id = self.context
+        user_id = self.context.get('user_id')
         cart_id = validated_data['cart_id']
         try:
            order =  OrderService.create_order(user_id=user_id, cart_id=cart_id)
