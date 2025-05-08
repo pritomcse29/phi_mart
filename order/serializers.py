@@ -108,7 +108,7 @@ class CreateOrderSerializer(serializers.Serializer):
         return cart_id
     def create(self, validated_data):
         # user_id = self.context
-        user_id = self.context.get('user_id')
+        user_id = self.context['user_id']
         cart_id = validated_data['cart_id']
         try:
            order =  OrderService.create_order(user_id=user_id, cart_id=cart_id)
