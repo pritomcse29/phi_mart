@@ -91,6 +91,7 @@ class CartSerializer(serializers.ModelSerializer):
         # [item for item in cart.items.all()]
         # print("list",list)
         return sum([item.product.price * item.quantity for item in cart.items.all()])
+        # return sum([item.product.price * item.quantity for item in cart.items.all()])
 class UpdateCartItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = CartItem
@@ -112,7 +113,8 @@ class CreateOrderSerializer(serializers.Serializer):
         try:
            order =  OrderService.create_order(user_id=user_id, cart_id=cart_id)
            return order
-        except ValueError as e:
+        except Exception as e:
+        # except ValueError as e:
             raise serializers.ValidationError(str(e))
 
 
