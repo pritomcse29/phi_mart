@@ -80,6 +80,22 @@ class OrderViewSet(ModelViewSet):
       #       if self.request.method  in ['PATCH', 'DELETE']:
       #             return [IsAdminUser()]
       #       return [IsAuthenticated()]
+      
+      @action(detail=True, methods=['post'])
+      def cancel(self, request, pk=None):
+            order = self.get_object()
+            OrderService.cancel_order(order=order, user=request.user)
+            return Response({'status': 'Order canceled'})
+
+      @action(detail=True, methods=['patch'])
+      def update_status(self, request, pk=None):
+        order = self.get_object()
+        serializer = orderSz.UpdateOrderSerializer(
+            order, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'status': f'Order status updated to {request.data['status']}'})
+
       def get_serializer_class(self):
             if self.request.method =='POST':
                   return CreateOrderSerializer
