@@ -163,11 +163,12 @@ class OrderViewSet(ModelViewSet):
 
 @api_view(['POST'])
 def initiate_payment(request):
+    print(request.data)
     user = request.user
     amount = request.data.get("amount") 
     order_id = request.data.get("orderId")   
     num_items = request.data.get("numItems")
-    settings = { 'store_id': 'tesphima681cdd5d122b5', 'store_pass': 'phima681cdd5d122b5@ssl', 'issandbox': True }
+    settings = { 'store_id': 'phima681cdd5d122b5', 'store_pass': 'phima681cdd5d122b5@ssl', 'issandbox': True }
     sslcz = SSLCOMMERZ(settings)
     post_body = {}
     post_body['total_amount'] = amount
