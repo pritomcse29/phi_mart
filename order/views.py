@@ -6,6 +6,8 @@ from order.serializers import updateOrderSerializer,CreateOrderSerializer,Update
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.decorators import action
+
 class CartViewSet(CreateModelMixin,DestroyModelMixin,RetrieveModelMixin,GenericViewSet):
       
       # queryset = Cart.objects.all()
@@ -89,12 +91,13 @@ class OrderViewSet(ModelViewSet):
 
       @action(detail=True, methods=['patch'])
       def update_status(self, request, pk=None):
-        order = self.get_object()
-        serializer = orderSz.UpdateOrderSerializer(
-            order, data=request.data, partial=True)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response({'status': f'Order status updated to {request.data['status']}'})
+            order = self.get_object()
+            serializer = updateOrderSerializer(
+                  order, data=request.data, partial=True)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response({"status": f"Order status updated to {request.data['status']}"})
+
 
       def get_serializer_class(self):
             if self.request.method =='POST':
