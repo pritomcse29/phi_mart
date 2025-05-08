@@ -183,13 +183,13 @@ def initiate_payment(request):
     post_body['cus_add1'] = user.address
     post_body['cus_city'] = "Dhaka"
     post_body['cus_country'] = "Bangladesh"
-    post_body['shipping_method'] = "Courier"
+    post_body['shipping_method'] = "No"
     post_body['multi_card_name'] = ""
     post_body['num_of_item'] = num_items
     post_body['product_name'] = "E-Commerce Products"
     post_body['product_category'] = "General"
     post_body['product_profile'] = "general"
-
+    post_body['ship_name'] = f"{user.first_name} {user.last_name}"
 
     response = sslcz.createSession(post_body) # API response
     print(response)
